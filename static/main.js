@@ -1,9 +1,10 @@
 
-var myGamePiece;
+var player1;
 
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "red", 10, 120);
+    player1 = new component(30, 30, "red", 10, 120);
+    myrect = new component(30, 30, "blue", 100, 120);
 }
 
 var myGameArea = {
@@ -34,7 +35,7 @@ function component(width, height, color, x, y) {
     this.speedX = 0;
     this.speedY = 0;    
     this.x = x;
-    this.y = y;    
+    this.y = y;
     this.update = function() {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
@@ -42,18 +43,20 @@ function component(width, height, color, x, y) {
     }
     this.newPos = function() {
         this.x += this.speedX;
-        this.y += this.speedY;        
+        this.y += this.speedY;
     }    
 }
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.speedX = 0;
-    myGamePiece.speedY = 0;    
-    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.speedX = -5; }
-    if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.speedX = 5; }
-    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speedY = -5; }
-    if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedY = 5; }
-    myGamePiece.newPos();    
-    myGamePiece.update();
+    player1.speedX = 0;
+    player1.speedY = 0;
+    if (myGameArea.keys && myGameArea.keys[37] && player1.x>myrect.x+30) {player1.speedX = -5; }
+    if (myGameArea.keys && myGameArea.keys[39]) {player1.speedX = 5; }
+    if (myGameArea.keys && myGameArea.keys[38]) {player1.speedY = -5; }
+    if (myGameArea.keys && myGameArea.keys[40]) {player1.speedY = 5; }
+    player1.newPos();
+    player1.update();
+    myrect.update();
+    console.log(player1.x)
 }
